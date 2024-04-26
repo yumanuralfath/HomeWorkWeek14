@@ -14,3 +14,25 @@ export const GET = async (req, { params }) => {
 };
 
 //Create a new book
+export const POST = async (req, { params }) => {
+  try {
+
+    const { title, author, publisher, year, pages, image } = await req.json();
+
+    await prisma.book.create({
+      data: {
+        title,
+        author,
+        publisher,
+        year,
+        pages,
+        image
+      }
+    })
+
+    return NextResponse.json({ message: "Book created successful" })
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 })
+  }
+}

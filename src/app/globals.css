@@ -3,26 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 255, 255, 255; /* Sesuai dengan warna teks putih untuk tema gelap */
+  --background-start-rgb: 0, 0, 0; /* Sesuai dengan warna latar belakang utama untuk tema gelap */
+  --background-end-rgb: 0, 0, 0; /* Sesuai dengan warna latar belakang utama untuk tema gelap */
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 0, 0, 0; /* Sesuai dengan warna teks hitam untuk tema terang */
+    --background-start-rgb: 214, 219, 220; /* Sesuai dengan warna latar belakang utama untuk tema terang */
+    --background-end-rgb: 255, 255, 255; /* Sesuai dengan warna latar belakang utama untuk tema terang */
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
+  background: primary(to bottom, transparent, rgb(var(--background-end-rgb)))
     rgb(var(--background-start-rgb));
 }
 
@@ -30,4 +26,40 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.primary {
+  --color-primary: #f700ff;
+}
+
+.secondary {
+  --color-secondary: #00dc00;
+}
+
+.accent {
+  --color-accent: #00b7ff;
+}
+
+.neutral {
+  --color-neutral: #1a160b;
+}
+
+.base-100 {
+  --color-base-100: #30263c;
+}
+
+.info {
+  --color-info: #3eb5ff;
+}
+
+.success {
+  --color-success: #009b72;
+}
+
+.warning {
+  --color-warning: #ca4200;
+}
+
+.error {
+  --color-error: #ff759e;
 }

@@ -35,3 +35,30 @@ export const DELETE = async (req, { params }) => {
     return NextResponse.json({ message: 'Error deleting book' }, { status: 500 })
   }
 }
+
+export const PUT = async (req, { params }) => {
+  try {
+    const { id } = params;
+    const { title, author, publisher, year, pages } = req.json();
+
+    // Update book data
+    const updatedBook = await prisma.book.update({
+      where: {
+        id: +id
+      },
+      data: {
+        title,
+        author,
+        publisher,
+        year,
+        pages,
+      },
+    });
+
+    return NextResponse.json({ book: updatedBook }, { status: 200 });
+  } catch (error) {
+
+    console.error(error);
+    return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
+  }
+}

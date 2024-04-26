@@ -7,7 +7,10 @@ export const POST = async (request) => {
 
   if (!file) {
     return NextResponse.json({ success: false });
+  }
 
+  if (!file.type.startsWith('image/')) {
+    throw new Error('Only image files are allowed.')
   }
 
   const bytes = await file.arrayBuffer();
@@ -15,7 +18,6 @@ export const POST = async (request) => {
 
   const path = `public/upload/${file.name}`;
   await writeFile(path, buffer)
-  console.log(`Open ${path} to see the uploaded file`);
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json(path);
 } 
