@@ -1,6 +1,7 @@
 "use client";
 
 import { createBook, imageBook } from "@/fetcher/books";
+import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react";
 
 export const CreateForm = () => {
@@ -14,9 +15,11 @@ export const CreateForm = () => {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+
   useEffect(() => {
     if (uploadSuccess) {
-      window.location.reload();
+      // window.location.reload();
     }
   }, [uploadSuccess]);
 
@@ -26,14 +29,14 @@ export const CreateForm = () => {
 
     try {
       setLoading(true);
-      const imagePath = await imageBook(file);
+      const imageUrl = await imageBook(file);
       const bookResponse = await createBook({
         title,
         author,
         publisher,
         year: parseInt(year),
         pages: parseInt(pages),
-        image: imagePath,
+        image: imageUrl,
       });
 
       if (!bookResponse || bookResponse.status !== 200) {
@@ -50,6 +53,7 @@ export const CreateForm = () => {
 
       setTimeout(() => {
         setUploadSuccess(false);
+        router.push("/");
       }, 3000);
     } catch (error) {
       console.error("Error creating book:", error);
@@ -79,6 +83,7 @@ export const CreateForm = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="input input-bordered w-full max-w-xs text-black"
+            required
           />
         </div>
         <div>
@@ -92,6 +97,7 @@ export const CreateForm = () => {
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             className="input input-bordered w-full max-w-xs text-black"
+            required
           />
         </div>
         <div>
@@ -105,6 +111,7 @@ export const CreateForm = () => {
             value={publisher}
             onChange={(e) => setPublisher(e.target.value)}
             className="input input-bordered w-full max-w-xs text-black"
+            required
           />
         </div>
         <div>
@@ -118,6 +125,7 @@ export const CreateForm = () => {
             value={year}
             onChange={(e) => setYear(e.target.value)}
             className="text-black input input-bordered w-full max-w-xs"
+            required
           />
         </div>
         <div>
@@ -131,6 +139,7 @@ export const CreateForm = () => {
             value={pages}
             onChange={(e) => setPages(e.target.value)}
             className="text-black input input-bordered w-full max-w-xs"
+            required
           />
         </div>
         <div>
@@ -142,6 +151,7 @@ export const CreateForm = () => {
             id="file"
             onChange={handleFileChange}
             className="input-file input input-bordered w-full max-w-xs"
+            required
           />
         </div>
         {error && (

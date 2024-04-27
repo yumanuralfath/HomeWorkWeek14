@@ -41,11 +41,53 @@ export const imageBook = async (file) => {
       method: 'POST',
       body: data
     })
-    if (!res.ok) throw new Error(await res.text())
-    const imagePath = await res.text();
-    return imagePath;
+    if (!res.ok) throw new Error(await res.text());
+    const imagePath = await res.json();
+    const cleanedImagePath = imagePath.replace(/^public\//, '');
+    const baseUrl = "http://localhost:3000"; 
+    const imageUrl = `${baseUrl}/${cleanedImagePath}`;
+    console.log(imageUrl, "<<<<")
+
+    return imageUrl;
   } catch (e) {
     console.error(e);
     return null; // Mengembalikan null jika terjadi error
   }
 }
+
+//fetch updateBook
+export const updateBook = async (id, newData) => {
+  console.log(id, newData);
+  try {
+    const response = await fetch(`${Base_URL}/book/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(newData),
+    });
+
+    return response;
+  } catch (err) {
+    throw new Error({ message: err.response.message });
+  }
+};
+
+//Get Book By id
+export const getDetailBookById = async (id) => {
+  try {
+    const response = await fetch(`${Base_URL}/book/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw new Error({ message: err.response.message });
+  }
+};
+
+//get All book
+export const getAllbook = async (id) => {
+  try {
+    const response = await fetch(`${Base_URL}/book/`);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw new Error({ message: err });
+  }
+};

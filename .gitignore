@@ -36,4 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 # file upload 
-/public/upload
+/src/upload/*

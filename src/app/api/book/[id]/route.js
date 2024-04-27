@@ -19,6 +19,7 @@ export const GET = async (req, { params }) => {
   }
 }
 
+//Delete book by ID
 export const DELETE = async (req, { params }) => {
   try {
     const { id } = params;
@@ -36,10 +37,12 @@ export const DELETE = async (req, { params }) => {
   }
 }
 
+
+//Edit Book by id
 export const PUT = async (req, { params }) => {
   try {
     const { id } = params;
-    const { title, author, publisher, year, pages } = req.json();
+    const { title, author, publisher, year, pages } = await req.json();
 
     // Update book data
     const updatedBook = await prisma.book.update({
